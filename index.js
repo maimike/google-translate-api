@@ -5,7 +5,7 @@ var token = require('@vitalets/google-translate-token');
 
 var languages = require('./languages');
 
-function translate(text, opts) {
+function translate(text, opts, proxyUrl) {
     opts = opts || {};
 
     var e;
@@ -31,6 +31,9 @@ function translate(text, opts) {
 
     return token.get(text, {tld: opts.tld}).then(function (token) {
         var url = 'https://translate.google.' + opts.tld + '/translate_a/single';
+        if (proxyUrl){
+            url=proxyUrl+url
+        }
         var data = {
             client: opts.client || 't',
             sl: opts.from,
